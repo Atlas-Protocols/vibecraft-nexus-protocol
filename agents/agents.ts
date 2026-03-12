@@ -105,12 +105,17 @@ export class CoderAgent extends BaseAgent {
   async executeTask(task: TaskPayload, _msg: AgentMessage): Promise<ResultPayload> {
     this.log('code', task.title);
 
+    // Resolve working directory — task-level overrides agent default
+    const workDir = task.workingDir
+      ? task.workingDir.replace(/^~/, process.env.HOME ?? '')
+      : this.outputDir;
+
     // Pull any context this task needs
     const contextContent: string[] = [];
     if (task.context) {
       for (const key of task.context) {
         const c = this.pullContext(key);
-        if (c) contextContent.push(`// Context: ${key}\n${c}`);
+        if (c != null) contextContent.push(`// Context: ${key}\n${c}`);
       }
     }
 
@@ -118,21 +123,35 @@ export class CoderAgent extends BaseAgent {
     // Here we generate a scaffold as a demonstration
     const code = this.generateScaffold(task, contextContent);
     const filename = `${task.title.replace(/\s+/g, '_').toLowerCase()}.ts`;
-    const filepath = path.join(this.outputDir, filename);
+    const filepath = path.join(workDir, filename);
 
     try {
-      fs.mkdirSync(this.outputDir, { recursive: true });
+      fs.mkdirSync(workDir, { recursive: true });
       fs.writeFileSync(filepath, code, 'utf-8');
     } catch (e) {
       return { success: false, error: String(e), output: null };
     }
 
+    // Check out branch if specified
+    if (task.branch) {
+      try {
+        const { execSync } = await import('child_process');
+        execSync(`git -C ${workDir} checkout -B ${task.branch}`, { stdio: 'ignore' });
+        execSync(`git -C ${workDir} add ${filepath}`, { stdio: 'ignore' });
+        execSync(`git -C ${workDir} commit -m "feat: ${task.title} (nexus task)"`, { stdio: 'ignore' });
+        execSync(`git -C ${workDir} push -u origin ${task.branch}`, { stdio: 'ignore' });
+        console.log(`[coder] Committed to branch ${task.branch}`);
+      } catch (e) {
+        console.warn(`[coder] Git operations failed: ${e}`);
+      }
+    }
+
     return {
       success: true,
-      output: { filepath, linesWritten: code.split('\n').length },
+      output: { filepath, linesWritten: code.split('\n').length, workingDir: workDir, branch: task.branch },
       filesChanged: [filepath],
       contextAnnotations: [
-        { key: `code:${task.title}`, note: `Wrote ${filename} — ${code.split('\n').length} lines`, confidence: 'high' },
+        { key: `code:${task.title}`, note: `Wrote ${filename} — ${code.split('\n').length} lines in ${workDir}`, confidence: 'high' },
       ],
     };
   }

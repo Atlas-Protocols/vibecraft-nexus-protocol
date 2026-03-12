@@ -55,6 +55,8 @@ export interface TaskPayload {
   constraints?: string[];
   outputFormat?: string;
   deadline?: number;
+  workingDir?: string;  // repo/directory for the coder to work in (e.g. ~/first-friday-bakersfield)
+  branch?: string;      // git branch to commit to (e.g. nexus/bob/feature-name)
 }
 
 export interface ResultPayload {

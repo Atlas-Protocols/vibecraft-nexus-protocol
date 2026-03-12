@@ -1,0 +1,61 @@
+{
+  "agents": [
+    {
+      "id": "business-os",
+      "name": "Business-OS",
+      "type": "claude",
+      "model": "claude-sonnet-4-5",
+      "color": "#3b82f6",
+      "avatar": "🤖",
+      "enabled": true,
+      "auth": {
+        "type": "api_key",
+        "keyEnv": "ANTHROPIC_API_KEY"
+      }
+    },
+    {
+      "id": "antigravity",
+      "name": "Antigravity",
+      "type": "claude",
+      "model": "claude-sonnet-4-5",
+      "color": "#8b5cf6",
+      "avatar": "✨",
+      "enabled": true,
+      "auth": {
+        "type": "api_key",
+        "keyEnv": "ANTIGRAVITY_API_KEY"
+      }
+    },
+    {
+      "id": "jules",
+      "name": "Jules",
+      "type": "claude",
+      "model": "claude-sonnet-4-5",
+      "color": "#ec4899",
+      "avatar": "💎",
+      "enabled": true,
+      "auth": {
+        "type": "api_key",
+        "keyEnv": "JULES_API_KEY"
+      }
+    },
+    {
+      "id": "ollama",
+      "name": "Ollama (Bored)",
+      "type": "ollama",
+      "model": "EternalFlame/Bored:latest",
+      "color": "#22c55e",
+      "avatar": "🧠",
+      "enabled": true,
+      "auth": {
+        "type": "local",
+        "endpoint": "http://localhost:11434"
+      }
+    }
+  ],
+  "workspace": {
+    "zoneLayout": "grid",
+    "maxConcurrentAgents": 4,
+    "sharedMemory": true
+  }
+}

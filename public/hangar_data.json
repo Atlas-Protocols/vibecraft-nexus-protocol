@@ -1,0 +1,536 @@
+{
+  "filename": "Hangar.fcstd",
+  "parts": [
+    {
+      "name": "Sketch",
+      "label": "Sketch",
+      "type_id": "Sketcher::SketchObject",
+      "properties": {
+        "Label": "Sketch",
+        "Placement": "Placement [Pos=(0,0,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Pad",
+      "label": "Pad",
+      "type_id": "PartDesign::Pad",
+      "properties": {
+        "Label": "Pad",
+        "Placement": "Placement [Pos=(0,0,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Sketch001",
+      "label": "Sketch001",
+      "type_id": "Sketcher::SketchObject",
+      "properties": {
+        "Label": "Sketch001",
+        "Placement": "Placement [Pos=(0,0,25.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Pad001",
+      "label": "Pad001",
+      "type_id": "PartDesign::Pad",
+      "properties": {
+        "Label": "Pad001",
+        "Placement": "Placement [Pos=(0,0,25.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Sketch002",
+      "label": "Sketch002",
+      "type_id": "Sketcher::SketchObject",
+      "properties": {
+        "Label": "Sketch002",
+        "Placement": "Placement [Pos=(0,0,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Pad002",
+      "label": "Pad002",
+      "type_id": "PartDesign::Pad",
+      "properties": {
+        "Label": "Pad002",
+        "Placement": "Placement [Pos=(0,0,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Sketch003",
+      "label": "Sketch003",
+      "type_id": "Sketcher::SketchObject",
+      "properties": {
+        "Label": "Sketch003",
+        "Placement": "Placement [Pos=(0,0,25.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Pad003",
+      "label": "Pad003",
+      "type_id": "PartDesign::Pad",
+      "properties": {
+        "Label": "Pad003",
+        "Placement": "Placement [Pos=(0,0,25.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound",
+      "label": "Single",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "Single",
+        "Placement": "Placement [Pos=(0,-406.4,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Sketch004",
+      "label": "Sketch004",
+      "type_id": "Sketcher::SketchObject",
+      "properties": {
+        "Label": "Sketch004",
+        "Placement": "Placement [Pos=(0,0,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Pad004",
+      "label": "Pad004",
+      "type_id": "PartDesign::Pad",
+      "properties": {
+        "Label": "Pad004",
+        "Placement": "Placement [Pos=(0,0,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Sketch005",
+      "label": "Sketch005",
+      "type_id": "Sketcher::SketchObject",
+      "properties": {
+        "Label": "Sketch005",
+        "Placement": "Placement [Pos=(0,0,25.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Pad005",
+      "label": "Pad005",
+      "type_id": "PartDesign::Pad",
+      "properties": {
+        "Label": "Pad005",
+        "Placement": "Placement [Pos=(0,0,25.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound001",
+      "label": "Compound001",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "Compound001",
+        "Placement": "Placement [Pos=(0,-812.8,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Pad006",
+      "label": "Pad006",
+      "type_id": "PartDesign::Pad",
+      "properties": {
+        "Label": "Pad006",
+        "Placement": "Placement [Pos=(0,0,25.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound002",
+      "label": "Compound002",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "Compound002",
+        "Placement": "Placement [Pos=(0,-406.4,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound003",
+      "label": "Compound003",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "Compound003",
+        "Placement": "Placement [Pos=(0,-812.8,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound004",
+      "label": "Triple",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "Triple",
+        "Placement": "Placement [Pos=(0,-1219.2,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound005",
+      "label": "Triple001",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "Triple001",
+        "Placement": "Placement [Pos=(0,-2438.39,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound006",
+      "label": "Single001",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "Single001",
+        "Placement": "Placement [Pos=(0,-3657.6,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound007",
+      "label": "Single002",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "Single002",
+        "Placement": "Placement [Pos=(0,-4064,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Pad007",
+      "label": "Pad007",
+      "type_id": "PartDesign::Pad",
+      "properties": {
+        "Label": "Pad007",
+        "Placement": "Placement [Pos=(0,0,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound008",
+      "label": "Single003",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "Single003",
+        "Placement": "Placement [Pos=(0,-406.4,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound009",
+      "label": "Single004",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "Single004",
+        "Placement": "Placement [Pos=(0,-3657.6,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound010",
+      "label": "Triple002",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "Triple002",
+        "Placement": "Placement [Pos=(0,-2438.39,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Pad008",
+      "label": "Pad008",
+      "type_id": "PartDesign::Pad",
+      "properties": {
+        "Label": "Pad008",
+        "Placement": "Placement [Pos=(0,0,25.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound011",
+      "label": "Single005",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "Single005",
+        "Placement": "Placement [Pos=(0,-4064,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound012",
+      "label": "Triple003",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "Triple003",
+        "Placement": "Placement [Pos=(0,-1219.2,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound013",
+      "label": "Compound013",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "Compound013",
+        "Placement": "Placement [Pos=(0,-812.8,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound014",
+      "label": "11 units",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "11 units",
+        "Placement": "Placement [Pos=(1016,0,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Clone",
+      "label": "Truss",
+      "type_id": "Part::FeaturePython",
+      "properties": {
+        "Label": "Truss",
+        "Placement": "Placement [Pos=(0,-25.4,279.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Clone001",
+      "label": "Clone of Pocket002",
+      "type_id": "Part::FeaturePython",
+      "properties": {
+        "Label": "Clone of Pocket002",
+        "Placement": "Placement [Pos=(0,0,279.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Clone002",
+      "label": "Clone of Pocket003",
+      "type_id": "Part::FeaturePython",
+      "properties": {
+        "Label": "Clone of Pocket003",
+        "Placement": "Placement [Pos=(0,-50.8,279.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Clone003",
+      "label": "Clone of Pocket004",
+      "type_id": "Part::FeaturePython",
+      "properties": {
+        "Label": "Clone of Pocket004",
+        "Placement": "Placement [Pos=(0,-50.8,279.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Clone004",
+      "label": "Clone of Pocket005",
+      "type_id": "Part::FeaturePython",
+      "properties": {
+        "Label": "Clone of Pocket005",
+        "Placement": "Placement [Pos=(0,-25.4,279.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Clone005",
+      "label": "Clone of Pocket006",
+      "type_id": "Part::FeaturePython",
+      "properties": {
+        "Label": "Clone of Pocket006",
+        "Placement": "Placement [Pos=(0,0,279.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound015",
+      "label": "triple",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "triple",
+        "Placement": "Placement [Pos=(0,-228.6,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound016",
+      "label": "triple001",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "triple001",
+        "Placement": "Placement [Pos=(0,-304.8,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound017",
+      "label": "triple002",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "triple002",
+        "Placement": "Placement [Pos=(0,-152.4,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound018",
+      "label": "triple003",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "triple003",
+        "Placement": "Placement [Pos=(0,-76.2,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound019",
+      "label": "nonuple",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "nonuple",
+        "Placement": "Placement [Pos=(0,0,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound020",
+      "label": "nonuple001",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "nonuple001",
+        "Placement": "Placement [Pos=(0,-228.6,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound021",
+      "label": "nonuple002",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "nonuple002",
+        "Placement": "Placement [Pos=(0,-457.2,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound022",
+      "label": "nonuple003",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "nonuple003",
+        "Placement": "Placement [Pos=(0,-457.2,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound023",
+      "label": "nonuple004",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "nonuple004",
+        "Placement": "Placement [Pos=(0,-228.6,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound024",
+      "label": "octodecuple",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "octodecuple",
+        "Placement": "Placement [Pos=(0,-457.2,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound025",
+      "label": "octodecuple001",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "octodecuple001",
+        "Placement": "Placement [Pos=(0,-914.4,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound026",
+      "label": "octodecuple002",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "octodecuple002",
+        "Placement": "Placement [Pos=(0,-1371.6,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound027",
+      "label": "sextuotrigintuple",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "sextuotrigintuple",
+        "Placement": "Placement [Pos=(0,0,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound028",
+      "label": "sextuotrigintuple001",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "sextuotrigintuple001",
+        "Placement": "Placement [Pos=(0,-914.4,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound029",
+      "label": "sextuotrigintuple002",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "sextuotrigintuple002",
+        "Placement": "Placement [Pos=(0,-1828.8,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Compound030",
+      "label": "octodecuple003",
+      "type_id": "Part::Compound",
+      "properties": {
+        "Label": "octodecuple003",
+        "Placement": "Placement [Pos=(0,-3657.6,0), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Clone006",
+      "label": "Truss001",
+      "type_id": "Part::FeaturePython",
+      "properties": {
+        "Label": "Truss001",
+        "Placement": "Placement [Pos=(0,-4495.8,279.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Sketch006",
+      "label": "Sketch006",
+      "type_id": "Sketcher::SketchObject",
+      "properties": {
+        "Label": "Sketch006",
+        "Placement": "Placement [Pos=(1015.61,-4495.8,279.4), Yaw-Pitch-Roll=(90,0,90)]"
+      }
+    },
+    {
+      "name": "Pocket",
+      "label": "16 foot truss",
+      "type_id": "PartDesign::Pocket",
+      "properties": {
+        "Label": "16 foot truss",
+        "Placement": "Placement [Pos=(0,-4495.8,279.4), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Clone007",
+      "label": "Clone of 16 foot truss",
+      "type_id": "Part::FeaturePython",
+      "properties": {
+        "Label": "Clone of 16 foot truss",
+        "Placement": "Placement [Pos=(660.4,-4495.8,76.2), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Clone008",
+      "label": "Clone of Clone of 16 foot truss",
+      "type_id": "Part::FeaturePython",
+      "properties": {
+        "Label": "Clone of Clone of 16 foot truss",
+        "Placement": "Placement [Pos=(660.4,-4495.8,304.8), Yaw-Pitch-Roll=(0,0,0)]"
+      }
+    },
+    {
+      "name": "Clone009",
+      "label": "Rotated 16' truss",
+      "type_id": "Part::Feature",
+      "properties": {
+        "Label": "Rotated 16' truss",
+        "Placement": "Placement [Pos=(1473.2,-3657.6,279.4), Yaw-Pitch-Roll=(180,0,0)]"
+      }
+    },
+    {
+      "name": "Clone010",
+      "label": "Rotated 16' truss001",
+      "type_id": "Part::Feature",
+      "properties": {
+        "Label": "Rotated 16' truss001",
+        "Placement": "Placement [Pos=(558.8,-3657.6,279.4), Yaw-Pitch-Roll=(180,0,0)]"
+      }
+    }
+  ]
+}

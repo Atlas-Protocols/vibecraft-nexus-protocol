@@ -88,7 +88,6 @@ const DEBUG = process.env.VIBECRAFT_DEBUG === 'true'
 const TMUX_SESSION = process.env.VIBECRAFT_TMUX_SESSION ?? DEFAULTS.TMUX_SESSION
 const SESSIONS_FILE = resolve(expandHome(process.env.VIBECRAFT_SESSIONS_FILE ?? DEFAULTS.SESSIONS_FILE))
 const TILES_FILE = resolve(expandHome(process.env.VIBECRAFT_TILES_FILE ?? '~/.vibecraft/data/tiles.json'))
-const LAUNCHPAD_FILE = resolve(expandHome(process.env.VIBECRAFT_LAUNCHPAD_FILE ?? '~/Documents/Business-OS/00-Brain/LAUNCHPAD.md'))
 
 /** Time before a "working" session auto-transitions to idle (failsafe for missed events) */
 const WORKING_TIMEOUT_MS = 120_000 // 2 minutes
@@ -131,11 +130,6 @@ function isOriginAllowed(origin: string | undefined): boolean {
 
     // Allow any port on localhost/127.0.0.1 (local development)
     if (url.hostname === 'localhost' || url.hostname === '127.0.0.1') {
-      return true
-    }
-
-    // Allow LocalTunnel and ngrok subdomains
-    if (url.hostname.endsWith('.loca.lt') || url.hostname.endsWith('.ngrok-free.app')) {
       return true
     }
 
@@ -1352,54 +1346,6 @@ function addEvent(event: ClaudeEvent) {
     }
   }
 
-  // ── Subagent session lifecycle ──────────────────────────────────────────────
-  // When a Task tool fires, create a virtual ManagedSession so the subagent
-  // gets its own zone in the Vibecraft 3D scene. No tmux session is started —
-  // this is purely a visualization construct.
-  if (event.type === 'pre_tool_use') {
-    const preEvent = event as PreToolUseEvent
-    if (preEvent.tool === 'Task') {
-      const description = (preEvent.toolInput as { description?: string }).description ?? 'Subagent'
-      const subId = preEvent.toolUseId
-      if (!managedSessions.has(subId)) {
-        const childSession: ManagedSession = {
-          id: subId,
-          name: description.slice(0, 40),
-          tmuxSession: `subagent-${subId.slice(0, 6)}`,
-          status: 'working',
-          createdAt: Date.now(),
-          lastActivity: Date.now(),
-          cwd: event.cwd,
-          parentSessionId: event.sessionId,
-          agentId: `subagent-${subId.slice(0, 6)}`,
-          isSubagent: true,
-        }
-        managedSessions.set(subId, childSession)
-        log(`Subagent spawned: ${childSession.name} (${subId.slice(0, 8)})`)
-        broadcastSessions()
-      }
-    }
-  }
-
-  if (event.type === 'post_tool_use') {
-    const postEvent = event as PostToolUseEvent
-    if (postEvent.tool === 'Task') {
-      const subId = postEvent.toolUseId
-      const childSession = managedSessions.get(subId)
-      if (childSession?.isSubagent) {
-        childSession.status = 'offline'
-        broadcastSessions()
-        // Remove after 3s — gives client time to show task completion
-        setTimeout(() => {
-          managedSessions.delete(subId)
-          broadcastSessions()
-          log(`Subagent removed: ${subId.slice(0, 8)}`)
-        }, 3000)
-      }
-    }
-  }
-  // ── End subagent lifecycle ──────────────────────────────────────────────────
-
   // Broadcast to all clients
   broadcast({ type: 'event', payload: processed })
 }
@@ -1476,57 +1422,6 @@ function watchEventsFile() {
   })
 
   log(`Watching events file: ${EVENTS_FILE}`)
-
-  // ── LAUNCHPAD coordination bus watcher ──────────────────────────────────────
-  // Watches LAUNCHPAD.md for changes and broadcasts a notification event so
-  // every Vibecraft client can show an activity feed update when any agent
-  // checks off a task or updates the queue.
-  if (existsSync(LAUNCHPAD_FILE)) {
-    const launchpadWatcher = watch(LAUNCHPAD_FILE, {
-      persistent: true,
-      usePolling: true,
-      interval: 500,
-    })
-
-    launchpadWatcher.on('change', () => {
-      try {
-        const content = readFileSync(LAUNCHPAD_FILE, 'utf-8')
-        const lines = content.split('\n')
-
-        // Find the most recently changed AGENT_QUEUE row (has status markers)
-        const queueRows = lines
-          .filter(l => l.includes('|') && (l.includes('[x]') || l.includes('[>]') || l.includes('[!]')))
-        const latestRow = queueRows[queueRows.length - 1]?.trim() ?? 'LAUNCHPAD updated'
-
-        // Extract a human-readable summary from the table row
-        const cols = latestRow.split('|').map(c => c.trim()).filter(Boolean)
-        const summary = cols.length >= 3
-          ? `[${cols[1]}] ${cols[2]}: ${cols[3] ?? ''}`.trim()
-          : latestRow.slice(0, 80)
-
-        // Broadcast as a synthetic notification event (appears in activity feed)
-        const notificationEvent = {
-          id: `launchpad-${Date.now()}`,
-          timestamp: Date.now(),
-          type: 'notification' as const,
-          sessionId: 'launchpad-watcher',
-          agentId: 'launchpad',
-          cwd: LAUNCHPAD_FILE,
-          message: `🚀 LAUNCHPAD: ${summary}`,
-          notificationType: 'launchpad_update',
-        }
-        broadcast({ type: 'event', payload: notificationEvent as any })
-        debug(`LAUNCHPAD changed, broadcasted: ${summary}`)
-      } catch (e) {
-        debug(`Error reading LAUNCHPAD file: ${e}`)
-      }
-    })
-
-    log(`Watching LAUNCHPAD: ${LAUNCHPAD_FILE}`)
-  } else {
-    debug(`LAUNCHPAD file not found, skipping watcher: ${LAUNCHPAD_FILE}`)
-  }
-  // ── End LAUNCHPAD watcher ────────────────────────────────────────────────────
 }
 
 // ============================================================================

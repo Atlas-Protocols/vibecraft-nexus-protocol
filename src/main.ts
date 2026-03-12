@@ -88,15 +88,12 @@ const AGENT_PORT = getAgentPort()
 
 // In dev, Vite proxies /ws and /api to the server
 // In prod (hosted), connect to localhost where user's agent runs
-// BUT if we're on a tunnel (loca.lt/ngrok), use the current host
-const isTunnel = window.location.hostname.endsWith('.loca.lt') || window.location.hostname.endsWith('.ngrok-free.app')
-
-const WS_URL = (import.meta.env.DEV || isTunnel)
-  ? `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}${import.meta.env.DEV ? '/ws' : '/ws'}`
+const WS_URL = import.meta.env.DEV
+  ? `ws://${window.location.host}/ws`
   : `ws://localhost:${AGENT_PORT}`
 
-const API_URL = (import.meta.env.DEV || isTunnel)
-  ? (import.meta.env.DEV ? '/api' : '')
+const API_URL = import.meta.env.DEV
+  ? '/api'
   : `http://localhost:${AGENT_PORT}`
 
 // Create session API instance

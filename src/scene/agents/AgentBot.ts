@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { Bot, Zap, Brain, Cpu } from 'lucide-react';
 
-export type AgentType = 'antigravity' | 'jules' | 'ollama' | 'ralph' | 'iron-claw' | 'tiny-claw' | 'pico-claw' | 'claude-agent';
+export type AgentType = 'antigravity' | 'jules' | 'ollama' | 'ralph';
 
 export class AgentBot {
     public mesh: THREE.Group;
@@ -24,10 +24,6 @@ export class AgentBot {
             case 'jules': return 0x22d3ee;       // Cyan
             case 'ollama': return 0xfbbf24;      // Amber
             case 'ralph': return 0x4ade80;       // Green
-            case 'iron-claw': return 0xef4444;    // Red
-            case 'tiny-claw': return 0xec4899;    // Pink
-            case 'pico-claw': return 0x8b5cf6;    // Violet
-            case 'claude-agent': return 0x6366f1; // Indigo
             default: return 0xffffff;
         }
     }

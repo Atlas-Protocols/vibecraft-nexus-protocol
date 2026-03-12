@@ -20,28 +20,24 @@ export class AgentManager {
 
     private generateHexRings() {
         // Ring 1: Deployment (R=7)
-        for (let i = 0; i < 12; i++) {
-            const angle = (Math.PI / 6) * i;
+        for (let i = 0; i < 6; i++) {
+            const angle = (Math.PI / 3) * i;
             this.deployPositions.push(new THREE.Vector3(Math.cos(angle) * 7, 0, Math.sin(angle) * 7));
         }
         // Ring 2: Resting (R=14)
-        for (let i = 0; i < 12; i++) {
-            const angle = (Math.PI / 6) * i;
+        for (let i = 0; i < 6; i++) {
+            const angle = (Math.PI / 3) * i;
             this.restPositions.push(new THREE.Vector3(Math.cos(angle) * 14, 0, Math.sin(angle) * 14));
         }
     }
 
     private spawnInitialAgents() {
-        const types: AgentType[] = [
-            'antigravity', 'jules', 'ollama', 'ralph',
-            'iron-claw', 'tiny-claw', 'pico-claw', 'claude-agent'
-        ];
+        const types: AgentType[] = ['antigravity', 'jules', 'ollama', 'ralph'];
         types.forEach((type, i) => {
             const agent = new AgentBot(type);
-            // Space out agents in Resting Zone
-            const posIdx = i % this.restPositions.length;
-            agent.mesh.position.copy(this.restPositions[posIdx]);
-            agent.moveTo(this.restPositions[posIdx]);
+            // Agents start in Resting Zone
+            agent.mesh.position.copy(this.restPositions[i]);
+            agent.moveTo(this.restPositions[i]);
             this.agents.set(type, agent);
             this.scene.add(agent.mesh);
         });

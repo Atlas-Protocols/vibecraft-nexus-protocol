@@ -310,12 +310,6 @@ export interface ManagedSession {
     q: number
     r: number
   }
-  /** Parent session ID — only set for Task-tool spawned subagent sessions */
-  parentSessionId?: string
-  /** Human-readable agent name (e.g. 'subagent-abc123', 'jules', 'n8n') */
-  agentId?: string
-  /** Whether this is a virtual session spawned by a Task tool call (no real tmux backing) */
-  isSubagent?: boolean
 }
 
 /** Git repository status */

@@ -18,10 +18,6 @@ export default defineConfig({
   },
   server: {
     port: clientPort,
-    allowedHosts: [
-      '.loca.lt',
-      '.ngrok-free.app'
-    ],
     proxy: {
       '/ws': {
         target: `ws://localhost:${serverPort}`,

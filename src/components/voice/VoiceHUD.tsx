@@ -9,7 +9,7 @@ export function VoiceHUD() {
     const [isProcessing, setIsProcessing] = useState(false);
     const audioContextRef = useRef<AudioContext | null>(null);
     const analyserRef = useRef<AnalyserNode | null>(null);
-    const animationFrameRef = useRef<number | null>(null);
+    const animationFrameRef = useRef<number>();
 
     const toggleListening = async () => {
         if (!isListening) {

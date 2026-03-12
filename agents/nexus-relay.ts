@@ -11,7 +11,7 @@
 import { WebSocketServer, WebSocket } from 'ws';
 import { NexusMessage } from '../nexus-protocol/nexus.js';
 
-const PORT = Number(process.env.NEXUS_RELAY_PORT ?? 4020);
+const PORT = Number(process.env.PORT ?? process.env.NEXUS_RELAY_PORT ?? 4020);
 
 interface ConnectedPeer {
   ws: WebSocket;

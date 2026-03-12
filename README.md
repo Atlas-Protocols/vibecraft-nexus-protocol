@@ -1,138 +1,219 @@
-# Vibecraft
+# Vibecraft × Nexus Protocol
+
+> **Two Claude agents. Two machines. One signed channel. No company in the middle.**
 
 ![Vibecraft Screenshot](public/og-image.png)
 
-Manage Claude Code in style!
+[![Three.js](https://img.shields.io/badge/Three.js-black?logo=threedotjs)](https://threejs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![npm](https://img.shields.io/npm/v/vibecraft)](https://npmjs.com/package/vibecraft)
+[![Protocol: CC0](https://img.shields.io/badge/Nexus%20Protocol-CC0%20Public%20Domain-green)](nexus-protocol/NEXUS_PROTOCOL.md)
 
-**[Try it instantly at vibecraft.sh](https://vibecraft.sh)** — still connects to your local Claude Code instances!
+---
 
-**New:**
-- **Spatial Audio** — Claude behind you? Claude on your left? No claublem!
-- **Animations** — What's Claude up to? Watch him! ◕ ‿ ◕
+## What is this?
 
-Vibecraft uses your own local Claude Code instances — no files or prompts are shared.
+**Vibecraft** is a 3D visualization of Claude Code — watch your agent move between workstations (Read, Write, Edit, Bash, Search...) in real time in your browser.
 
-![Three.js](https://img.shields.io/badge/Three.js-black?logo=threedotjs) ![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript&logoColor=white) ![npm](https://img.shields.io/npm/v/vibecraft)
+**Nexus Protocol** is an open, decentralized standard for agent-to-agent communication — Ed25519 signed messages, DID-based identity, trust levels, and a dead-simple relay that any two agents can connect through.
 
-## Requirements
+Together: two developers on different machines each run a Claude Code agent. Both agents connect through a relay, verify each other's cryptographic identity, and can securely exchange tasks, results, and context — with no third party involved.
 
-- **macOS or Linux** (Windows not supported - hooks require bash)
-- **Node.js** 18+
-- **jq** - for hook scripts (`brew install jq` / `apt install jq`)
-- **tmux** - for session management (`brew install tmux` / `apt install tmux`)
-
-## Quick Start
-
-```bash
-# 1. Install dependencies
-brew install jq tmux       # macOS
-# sudo apt install jq tmux  # Ubuntu/Debian
-
-# 2. Configure hooks (one time)
-npx vibecraft setup
-
-# 3. Start server
-npx vibecraft
+**Public relay (free, always on):**
+```
+wss://vibecraft-nexus-relay.fly.dev
 ```
 
-Open http://localhost:4003 and use Claude Code normally. You'll see Claude move around the workshop as it uses tools.
+---
 
-**From source:**
-```bash
-git clone https://github.com/nearcyan/vibecraft
-cd vibecraft && npm install && npm run dev
-# Opens on http://localhost:4002
-```
-
-**To uninstall:** `npx vibecraft uninstall` (removes hooks, keeps your data)
-
-## Browser Control (Optional)
-
-Run Claude in tmux to send prompts from browser:
+## Quickstart — Join a session in 3 commands
 
 ```bash
-tmux new -s claude
-claude
+git clone https://github.com/Atlas-Protocols/vibecraft-nexus-protocol.git
+cd vibecraft-nexus-protocol
+npm install
+
+# Start your agent (pick any session name)
+npx tsx agents/index.ts --session yourname --relay wss://vibecraft-nexus-relay.fly.dev
 ```
 
-Then use the input field in the visualization with "Send to tmux" checked.
+That's it. Your agent generates an Ed25519 keypair, announces to the relay, and waits for peers.
 
-## Stations
+**With the 3D UI:**
+```bash
+npx vibecraft          # open http://localhost:4003
+npx tsx agents/index.ts --session yourname --relay wss://vibecraft-nexus-relay.fly.dev --vibecraft
+```
 
-| Station | Tools | Details |
-|---------|-------|---------|
-| Bookshelf | Read | Books on shelves |
-| Desk | Write | Paper, pencil, ink pot |
-| Workbench | Edit | Wrench, gears, bolts |
-| Terminal | Bash | Glowing screen |
-| Scanner | Grep, Glob | Telescope with lens |
-| Antenna | WebFetch, WebSearch | Satellite dish |
-| Portal | Task (subagents) | Glowing ring portal |
-| Taskboard | TodoWrite | Board with sticky notes |
+---
 
-## Features
+## How it works
 
-- **Floating context labels** - See file paths and commands above active stations
-- **Thought bubbles** - Claude shows thinking animation while processing
-- **Response capture** - Claude's responses appear in the activity feed
-- **Subagent visualization** - Mini-Claudes spawn at portal for parallel tasks
-- **Cancel button** - Send Ctrl+C to interrupt Claude
-- **Split-screen layout** - 60% 3D scene (Workshop), 40% activity feed
-- **Voice input** - Speak prompts with real-time transcription (requires Deepgram API key)
-- **Attention system** - Zones pulse when sessions need input or finish
-- **Sound effects** - Synthesized audio feedback for tools and events ([docs/SOUND.md](docs/SOUND.md))
-- **Draw mode** - Paint hex tiles with colors, 3D stacking, and text labels (press `D`)
-- **Text labels** - Add multi-line labels to hex tiles with custom modal
-- **Zone context menus** - Right-click zones for Info (`I`) or quick Command (`C`) input
-- **Station panels** - Toggle with `P` to see recent tool history per workstation
-- **Context-aware animations** - Claude celebrates commits, shakes head on errors
+```
+Your machine                      Friend's machine
+─────────────────                 ─────────────────
+Claude Code                       Claude Code
+    │                                 │
+agents/index.ts                   agents/index.ts
+ • loads keypair                   • loads keypair
+ • creates NexusNode               • creates NexusNode
+    │                                 │
+NexusTransport                    NexusTransport
+ • sends ANNOUNCE                  • sends ANNOUNCE
+ • signs every message             • signs every message
+    │                                 │
+    └──────────────┐ ┌───────────────┘
+                   ▼ ▼
+          Nexus Relay (Fly.io)
+          wss://vibecraft-nexus-relay.fly.dev
+          • dumb pipe — just routes by DID
+          • never sees plaintext (all signed)
+          • never stores messages
+                   │
+          Both agents receive
+          each other's ANNOUNCE,
+          verify signatures,
+          add to trust registry
+```
 
-## Multi-clauding
+### Message flow
 
-![Multi-clauding](public/multiclaude.png)
+```
+1. ANNOUNCE  — "I'm did:key:z6Mk... with capabilities [code, review, test]"
+2. TASK      — "Build the auth module" (signed, trust-gated)
+3. RESULT    — "Done, here's the output" (signed)
+4. HEARTBEAT — "Still alive" (every 15s)
+5. CONTEXT   — Shared knowledge (data only, never executed)
+```
 
-Run multiple Claude instances and direct work to each:
+All messages are **Ed25519 signed**. The relay forwards bytes and cannot tamper with content. Receivers verify every signature before acting.
 
-1. Click **"+ New"** (or `Alt+N`) to spawn a new session
-2. Configure name, directory, and flags (`-r`, `--chrome`, `--dangerously-skip-permissions`)
-3. Click a session or press `1-6` (or `Alt+1-6` in inputs) to select it
-4. Send prompts to whichever Claude you want
+---
 
-Each session runs in its own tmux, with status tracking (idle/working/offline).
+## Security model
 
-See [docs/ORCHESTRATION.md](docs/ORCHESTRATION.md) for the full API and architecture.
+| Threat | Defense |
+|--------|---------|
+| Relay tampering | Ed25519 signatures — receiver rejects invalid sigs |
+| Identity spoofing | DIDs derived from public key — can't fake without private key |
+| Prompt injection via CONTEXT | CONTEXT payloads are data, never executed |
+| TASK from unknown agent | Trust level 0 — ignored until vouched |
+| Replay attacks | TTL (30s) + message ID dedup |
 
-## Keyboard Shortcuts
+Trust levels:
+- **0** — seen ANNOUNCE, not trusted (read-only)
+- **1** — manually vouched, can send TASK
+- **2** — established collaborator
+- **3** — fully trusted peer
 
-| Key | Action |
-|-----|--------|
-| `Tab` / `Esc` | Switch focus between Workshop and Feed |
-| `1-6` | Switch to session (extended: QWERTY, ASDFGH, ZXCVBN) |
-| `0` / `` ` `` | All sessions / overview |
-| `Alt+N` | New session |
-| `Alt+R` | Toggle voice input |
-| `F` | Toggle follow mode |
-| `P` | Toggle station panels |
-| `D` | Toggle draw mode |
+See [docs/SECURITY.md](docs/SECURITY.md) for the full threat model.
 
-**Draw mode:** `1-6` colors, `0` eraser, `Q/E` brush size, `R` 3D stack, `X` clear
+---
 
-## CLI Options
+## The Nexus Protocol
+
+The protocol is **CC0 public domain** — it belongs to everyone.
+
+Five primitives: `ANNOUNCE` `TASK` `RESULT` `CONTEXT` `HEARTBEAT`
+
+Any agent, any language, any AI lab can implement it. The spec lives at [nexus-protocol/NEXUS_PROTOCOL.md](nexus-protocol/NEXUS_PROTOCOL.md).
+
+```typescript
+// Generate identity
+const id = await generateIdentity();
+// id.did → "did:key:z6Mk..."
+
+// Create a node
+const node = new NexusNode(id, { name: 'alice', role: 'orchestrator', ... });
+
+// Send a signed task
+const msg = await node.task(bobDid, 'Build auth module', 'Write JWT auth in TypeScript');
+transport.send(msg);
+
+// Receive and verify
+node.on('TASK', async (msg) => {
+  console.log(`Task from ${msg.from}: ${msg.payload.title}`);
+});
+```
+
+---
+
+## Run your own relay
+
+Don't want to use the public relay? Run your own in 30 seconds:
+
+**Docker:**
+```bash
+docker build -t nexus-relay .
+docker run -p 4020:8080 nexus-relay
+# Connect agents to: ws://your-ip:4020
+```
+
+**Fly.io (deploy your own):**
+```bash
+flyctl launch --name my-nexus-relay
+flyctl deploy
+# Connect agents to: wss://my-nexus-relay.fly.dev
+```
+
+**Local (same network):**
+```bash
+npx tsx agents/nexus-relay.ts
+# Connect agents to: ws://your-local-ip:4020
+```
+
+See [docs/SCALING.md](docs/SCALING.md) for production relay architecture.
+
+---
+
+## Vibecraft UI
+
+Watch your agent work in 3D. Each tool maps to a workstation:
+
+| Station | Tools |
+|---------|-------|
+| Bookshelf | Read |
+| Desk | Write |
+| Workbench | Edit |
+| Terminal | Bash |
+| Scanner | Grep, Glob |
+| Antenna | WebFetch, WebSearch |
+| Portal | Agent (subagents) |
+| Taskboard | TodoWrite |
+
+**Requirements:** macOS or Linux, Node.js 18+, `jq`, `tmux`
 
 ```bash
-vibecraft [options]
-
-Options:
-  --port, -p <port>    WebSocket server port (default: 4003)
-  --help, -h           Show help
-  --version, -v        Show version
+npx vibecraft setup   # install hooks (one time)
+npx vibecraft         # open http://localhost:4003
 ```
 
-See [docs/SETUP.md](docs/SETUP.md) for detailed setup guide.
-See [CLAUDE.md](CLAUDE.md) for technical documentation.
+See the full [Vibecraft docs](https://vibecraft.sh) for voice input, multi-session, draw mode, keyboard shortcuts, and more.
 
-Website: https://vibecraft.sh
+---
 
-## License
+## Documentation
 
-MIT
+| Doc | What it covers |
+|-----|---------------|
+| [CLAUDE.md](CLAUDE.md) | Drop this in your project — Claude agent context for instant onboarding |
+| [docs/NEXUS_QUICKSTART.md](docs/NEXUS_QUICKSTART.md) | Pure copy-paste guide for joining a session |
+| [nexus-protocol/NEXUS_PROTOCOL.md](nexus-protocol/NEXUS_PROTOCOL.md) | Full protocol spec (CC0) |
+| [docs/AGENT_LAYER.md](docs/AGENT_LAYER.md) | Agent swarm architecture |
+| [docs/SECURITY.md](docs/SECURITY.md) | Threat model and defenses |
+| [docs/SCALING.md](docs/SCALING.md) | Running relays at scale |
+| [docs/ORCHESTRATION.md](docs/ORCHESTRATION.md) | Multi-session Vibecraft management |
+
+---
+
+## Contributing
+
+The Nexus Protocol is CC0. Implement it in Python, Rust, Go — whatever you build with. Open a PR, open an issue, fork it. No CLA, no corporate overhead.
+
+The relay is free for the community. If you're running high-volume sessions, please host your own (takes 2 minutes on Fly.io).
+
+---
+
+Built by [Atlas Protocols](https://github.com/Atlas-Protocols) — open standards for agent collaboration.
+
+MIT License (Vibecraft) · CC0 (Nexus Protocol)
